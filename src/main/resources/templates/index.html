@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<!-- 定义页面显示的编码格式 -->
+<meta charset="utf-8">
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/default.css}" rel="stylesheet" />
+<link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon" />
+<script>
+	function queryStudentByName() {
+
+		$.ajax({
+			type : 'POST',
+			data : {
+				name : '杨超'
+			},
+			url : "/user/queryStudentByCondition",//请求的action路径
+			success : function(returnValue) { //请求成功后处理函数。
+				//处理后端传送过来json格式数据
+				var msg = jQuery.parseJSON(returnValue);
+				alert(msg.name);
+			},
+			error : function() {//请求失败处理函数
+				alert('请求失败');
+			}
+
+		});
+	}
+</script>
+</head>
+<body>
+	<div class="contentDiv">
+		<!-- 获取model属性中的title值,定义标题 -->
+		<legend>
+			<strong th:text="${userModel.title}"></strong>
+		</legend>
+		<input type="search" onblur="queryStudentByName()" id="name" />
+		<div>
+			<a class="btn btn-primary" href="add.html" th:href="@{/user/add}">新增</a>
+		</div>
+		<table class="table table-hover table-condensed">
+			<thead>
+				<tr>
+					<th>id</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>年龄</th>
+					<th>课程</th>
+					<th>删除</th>
+				</tr>
+			</thead>
+
+			<!--对于学生信息做一个判断,没有显示一个默认的 -->
+			<tr th:if="${userModel.allStudent.size()} eq 0">
+				<td colspan="3">没有学生信息</td>
+			</tr>
+
+			<!-- 对学生信息进行迭代 -->
+			<tbody id="tbody">
+				<tr th:each="user : ${userModel.allStudent}">
+					<!-- 类似于jstl的用法,可以直接从上面的对象中获取值 -->
+					<td th:text="${user.id}"></td>
+					<td><a th:href="@{'/user/'+${user.id}}" th:text="${user.name}"></a></td>
+					<!-- 动态生成一个查看用户信息的链接 -->
+					<td th:text="${user.sex}"></td>
+					<td th:text="${user.age}"></td>
+
+					<td th:text="${user.course_id}"></td>
+					<td><a class="btn btn-danger"
+						th:href="@{'/user/del/'+${user.id}}">删除</a></td>
+				</tr>
+			</tbody>
+
+		</table>
+	</div>
+</body>
+</html>

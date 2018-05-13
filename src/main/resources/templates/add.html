@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet" />
+<link th:href="@{/css/default.css}" rel="stylesheet" />
+<link rel="icon" th:href="@{/images/favicon.ico}" type="image/x-icon" />
+<title>选课</title>
+</head>
+<body>
+	<div class="contentDiv">
+		<h5>学生选课系统</h5>
+
+		<legend>
+			<strong>新增选课</strong>
+		</legend>
+
+		<!-- <form action="/user/insert" method="post" class="form-horizontal"> -->
+		<form th:action="@{/user/insert}" method="post"
+				class="form-horizontal">
+				
+				<input type="hidden" name="id" th:value="*{id}" />
+
+				<div class="form-group">
+					<label for="book_name" class="col-sm-2 control-label">姓名:</label>
+					<div class="col-xs-4">
+						<input type="text" class="form-control" id="student_name"
+							name="name" th:value="*{name}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="book_name" class="col-sm-2 control-label">年龄:</label>
+					<div class="col-xs-4">
+						<input type="text" class="form-control" id="student_age"
+							name="age" th:value="*{age}" />
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="book_name" class="col-sm-2 control-label">性别:</label>
+					<div class="col-xs-4">
+						<select name="sex" th:value="*{sex}">
+							<option value="男">男</option>
+							<option value="女">女</option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="book_name" class="col-sm-2 control-label">选课:</label>
+					<div class="col-xs-4">
+						<input type="checkbox" name="course_id" value="1" />语文 <input
+							type="checkbox" name="course_id" value="2" />数学 <input
+							type="checkbox" name="course_id" value="3" />英语
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<input class="btn btn-primary" type="submit" value="提交" />&nbsp;&nbsp;
+						<input class="btn" type="button" value="返回"
+							onclick="history.back()" />
+					</div>
+				</div>
+			</form>
+	</div>
+</body>
+</html>
